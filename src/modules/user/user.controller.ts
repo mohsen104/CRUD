@@ -11,10 +11,6 @@ export class UserController {
     this.service = new UserService();
   }
   @Get('/')
-  @Middleware((req: Request, res: Response, next: NextFunction) => {
-    console.log('a');
-    next();
-  })
   getAllUsers(req: Request, res: Response) {
     const data = this.service.getAllUsers();
     res.json(data);
