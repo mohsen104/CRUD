@@ -16,7 +16,7 @@ export function Controller(basePath: string): ClassDecorator {
 }
 
 export function Get(path: string): MethodDecorator {
-  return (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
     const controllerClass = target.constructor;
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
@@ -28,7 +28,7 @@ export function Get(path: string): MethodDecorator {
 }
 
 export function Post(path: string): MethodDecorator {
-  return (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
     const controllerClass = target.constructor;
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
@@ -40,7 +40,7 @@ export function Post(path: string): MethodDecorator {
 }
 
 export function Put(path: string): MethodDecorator {
-  return (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
     const controllerClass = target.constructor;
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
@@ -52,7 +52,7 @@ export function Put(path: string): MethodDecorator {
 }
 
 export function Delete(path: string): MethodDecorator {
-  return (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
     const controllerClass = target.constructor;
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
@@ -64,14 +64,14 @@ export function Delete(path: string): MethodDecorator {
 }
 
 export function Middleware(middleware: Function): MethodDecorator {
-  return (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
     const controllerClass = target.constructor;
 
     if (!Reflect.hasMetadata('middlewares', controllerClass, propertyKey)) {
       Reflect.defineMetadata('middlewares', [], controllerClass, propertyKey);
     }
 
-    const middlewares = Reflect.getMetadata('middlewares', controllerClass, propertyKey) as Function[];
+    const middlewares = Reflect.getMetadata('middlewares', controllerClass, propertyKey);
     middlewares.push(middleware);
     Reflect.defineMetadata('middlewares', middlewares, controllerClass, propertyKey);
   };
