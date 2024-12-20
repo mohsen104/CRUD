@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 async function ConnectedToMongodb(url: string) {
   try {
@@ -6,6 +6,7 @@ async function ConnectedToMongodb(url: string) {
       return false;
     }
     await mongoose.connect(url);
+    console.log('connected to mongodb');
   } catch (error) {
     console.log(error);
     process.exit(1);
