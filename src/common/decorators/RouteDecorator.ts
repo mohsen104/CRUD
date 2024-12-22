@@ -12,7 +12,6 @@ export function Controller(basePath: string): ClassDecorator {
     if (!Reflect.hasMetadata('routes', target)) {
       Reflect.defineMetadata('routes', [], target);
     }
-    console.log(Reflect.hasMetadata('routes', target));
   };
 }
 
