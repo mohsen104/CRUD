@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
-import { Controller, Delete, Get, Post, Put } from '../../common/decorators/RouteDecorator.js';
+import { Controller, Delete, Get, Post, Put } from '@decorators/RouteDecorator.js';
 import { UserService } from './user.service.js';
 import autoBind from 'auto-bind';
-import type { IUser } from '../../common/types/user.types.js';
-import type { IResponse } from '../../common/types/global.types.js';
+import type { IUser } from '@common/types/user.types.js';
+import type { IResponse } from '@common/types/global.types.js';
 
 @Controller('/users')
 export class UserController {
@@ -12,33 +12,53 @@ export class UserController {
     autoBind(this);
   }
   @Get('/')
-  async getAllUsers(req: Request, res: Response) {
-    const data = await this.service.getAllUsers();
-    res.json(data);
+  async getAllUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response: IResponse = await this.service.getAllUsers();
+      res.status(response.status).json(response);
+    } catch (error) {
+      next(error);
+    }
   }
   @Get('/:id')
-  getUser(req: Request, res: Response) {
-    const data = this.service.getUser();
-    res.json(data);
+  async getUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id as string;
+      const response: IResponse = await this.service.getUser(id);
+      res.status(response.status).json(response);
+    } catch (error) {
+      next(error);
+    }
   }
   @Post('/')
   async createUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { username, age, job, email, password }: IUser = req.body;
-      const { status, result }: IResponse = await this.service.createUser({ username, age, job, email, password });
-      res.status(status).json(result);
+      const response: IResponse = await this.service.createUser({ username, age, job, email, password });
+      res.status(response.status).json(response);
     } catch (error) {
       next(error);
     }
   }
   @Put('/:id')
-  updateUser(req: Request, res: Response) {
-    const data = this.service.updateUser();
-    res.json(data);
+  updateUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id as string;
+      const { username, age, job, email, password }: IUser = req.body;
+      const data = this.service.updateUser(id, { username, age, job, email, password });
+      res.json(data);
+    } catch (error) {
+      next(error);
+    }
   }
   @Delete('/:id')
-  deleteUser(req: Request, res: Response) {
-    const data = this.service.deleteUser();
-    res.json(data);
+  async deleteUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id as string;
+      const response: IResponse = await this.service.deleteUser(id);
+      res.status(response.status).json(response);
+    } catch (error) {
+      next(error);
+    }
   }
 }

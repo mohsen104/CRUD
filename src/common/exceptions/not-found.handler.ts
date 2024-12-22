@@ -1,9 +1,12 @@
-import type { Application, Response, Request } from "express";
+import type { Application, Response, Request } from 'express';
+import { StatusCodes } from '@constants/statusCodes.js';
+import logger from '@common/configs/logger.config.js';
 
 function NotFoundHandler(app: Application) {
   app.use((req: Request, res: Response) => {
-    res.status(404).json({
-      message: "Not Found Route",
+    logger.error('Not Found Route');
+    res.status(StatusCodes.NOT_FOUND).json({
+      message: 'Not Found Route',
       method: req.method,
       url: req.originalUrl,
     });

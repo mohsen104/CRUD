@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { UserController } from './modules/user/user.controller.js';
+import { UserController } from '@user/user.controller.js';
 import type { Application } from 'express';
 
 export function setupRoutes(app: Application) {

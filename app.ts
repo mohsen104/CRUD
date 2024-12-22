@@ -1,7 +1,7 @@
 import express, { type Application } from "express";
-import NotFoundHandler from "./src/common/exceptions/not-found.handler.js";
-import AllExceptionHandler from "./src/common/exceptions/all-exception.handler.js";
-import ConnectedToMongodb from "./src/common/configs/mongodb.config.js";
+import NotFoundHandler from "@exceptions/not-found.handler.js";
+import AllExceptionHandler from "@exceptions/all-exception.handler.js";
+import ConnectedToMongodb from "@configs/mongodb.config.js";
 import { setupRoutes } from "./src/index.routes.js";
 
 const app: Application = express();
