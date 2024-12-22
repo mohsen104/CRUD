@@ -8,7 +8,11 @@ function AllExceptionHandler(app: Application) {
     if (!status || isNaN(status) || status > 511 || status < 200) status = StatusCodes.INTERNAL_SERVER_ERROR;
     const message = err?.message ?? err?.cause ?? 'Internal Server Error';
     logger.error(message);
-    res.status(status).json({ message });
+    if (process.env.NODE_ENV === 'development') {
+      res.status(status).json({ code: err?.code, message, stack: err.stack });
+    } else {
+      res.status(status).json({ message });
+    }
   });
 }
 

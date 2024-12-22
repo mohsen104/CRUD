@@ -21,15 +21,21 @@ export class UserService {
     await UserModel.create({ username, age, job, email, password });
     return { status: StatusCodes.CREATED, message: 'user created successfully' };
   }
-  async updateUser(id: string, dto: Partial<IUser>) {
+  async updateUser(id: string, dto: IUser) {
     if (!isValidObjectId(id)) return { status: StatusCodes.BAD_REQUEST, message: 'invalid id' };
-    const user = await UserModel.findOneAndUpdate({ _id: new Types.ObjectId(id) }, { ...dto });
+    const user = await UserModel.findById(new Types.ObjectId(id));
     if (!user) return { status: StatusCodes.NOT_FOUND, message: 'user not found' };
+    for (const key in dto) {
+      if (dto[key as keyof IUser] !== undefined) {
+        (user[key as keyof IUser] as any) = dto[key as keyof IUser];
+      }
+    }
+    await user.save();
     return { status: StatusCodes.OK, message: 'user updated successfully' };
   }
   async deleteUser(id: string) {
     if (!isValidObjectId(id)) return { status: StatusCodes.BAD_REQUEST, message: 'invalid id' };
-    const user = await UserModel.findOneAndDelete({ _id: new Types.ObjectId(id) });
+    const user = await UserModel.findOne({ _id: new Types.ObjectId(id) });
     if (!user) return { status: StatusCodes.NOT_FOUND, message: 'user not found' };
     return { status: StatusCodes.OK, message: 'user deleted successfully' };
   }

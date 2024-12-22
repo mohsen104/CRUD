@@ -1,10 +1,5 @@
 import 'reflect-metadata';
-
-interface RouteDefinition {
-  method: string;
-  path: string;
-  handler: string | symbol;
-}
+import type { IRouteDefinition } from '@common/types/route.types.js';
 
 export function Controller(basePath: string): ClassDecorator {
   return (target: Function) => {
@@ -21,7 +16,7 @@ export function Get(path: string): MethodDecorator {
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
     }
-    const routes: RouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
     routes.push({ method: 'GET', path, handler: propertyKey });
     Reflect.defineMetadata('routes', routes, controllerClass);
   };
@@ -33,7 +28,7 @@ export function Post(path: string): MethodDecorator {
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
     }
-    const routes: RouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
     routes.push({ method: 'POST', path, handler: propertyKey });
     Reflect.defineMetadata('routes', routes, controllerClass);
   };
@@ -45,7 +40,7 @@ export function Put(path: string): MethodDecorator {
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
     }
-    const routes: RouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
     routes.push({ method: 'PUT', path, handler: propertyKey });
     Reflect.defineMetadata('routes', routes, controllerClass);
   };
@@ -57,7 +52,7 @@ export function Delete(path: string): MethodDecorator {
     if (!Reflect.hasMetadata('routes', controllerClass)) {
       Reflect.defineMetadata('routes', [], controllerClass);
     }
-    const routes: RouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
     routes.push({ method: 'DELETE', path, handler: propertyKey });
     Reflect.defineMetadata('routes', routes, controllerClass);
   };

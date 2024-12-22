@@ -1,7 +1,7 @@
-import type { NextFunction, Request, Response } from 'express';
+import autoBind from 'auto-bind';
 import { Controller, Delete, Get, Post, Put } from '@decorators/RouteDecorator.js';
 import { UserService } from './user.service.js';
-import autoBind from 'auto-bind';
+import type { NextFunction, Request, Response } from 'express';
 import type { IUser } from '@common/types/user.types.js';
 import type { IResponse } from '@common/types/global.types.js';
 
@@ -14,8 +14,8 @@ export class UserController {
   @Get('/')
   async getAllUsers(req: Request, res: Response, next: NextFunction) {
     try {
-      const response: IResponse = await this.service.getAllUsers();
-      res.status(response.status).json(response);
+      const result: IResponse = await this.service.getAllUsers();
+      res.status(result.status).json(result);
     } catch (error) {
       next(error);
     }
@@ -24,8 +24,8 @@ export class UserController {
   async getUser(req: Request, res: Response, next: NextFunction) {
     try {
       const id = req.params.id as string;
-      const response: IResponse = await this.service.getUser(id);
-      res.status(response.status).json(response);
+      const result: IResponse = await this.service.getUser(id);
+      res.status(result.status).json(result);
     } catch (error) {
       next(error);
     }
@@ -34,19 +34,19 @@ export class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { username, age, job, email, password }: IUser = req.body;
-      const response: IResponse = await this.service.createUser({ username, age, job, email, password });
-      res.status(response.status).json(response);
+      const result: IResponse = await this.service.createUser({ username, age, job, email, password });
+      res.status(result.status).json(result);
     } catch (error) {
       next(error);
     }
   }
   @Put('/:id')
-  updateUser(req: Request, res: Response, next: NextFunction) {
+  async updateUser(req: Request, res: Response, next: NextFunction) {
     try {
       const id = req.params.id as string;
       const { username, age, job, email, password }: IUser = req.body;
-      const data = this.service.updateUser(id, { username, age, job, email, password });
-      res.json(data);
+      const result: IResponse = await this.service.updateUser(id, { username, age, job, email, password });
+      res.status(result.status).json(result);
     } catch (error) {
       next(error);
     }
@@ -55,8 +55,8 @@ export class UserController {
   async deleteUser(req: Request, res: Response, next: NextFunction) {
     try {
       const id = req.params.id as string;
-      const response: IResponse = await this.service.deleteUser(id);
-      res.status(response.status).json(response);
+      const result: IResponse = await this.service.deleteUser(id);
+      res.status(result.status).json(result);
     } catch (error) {
       next(error);
     }

@@ -31,15 +31,13 @@
     "baseUrl": "./src",
     "paths": {
       "@common/*": ["./common/*"],
+      "@modules/*": ["./modules/*"],
       "@configs/*": ["./common/configs/*"],
       "@constants/*": ["./common/constants/*"],
       "@decorators/*": ["./common/decorators/*"],
       "@exceptions/*": ["./common/exceptions/*"],
       "@logs/*": ["./common/logs/*"],
-      "@types/*": ["./common/types/*"],
-      "@modules/*": ["./modules/*"],
-      "@dev/*": ["./modules/dev/*"],
-      "@user/*": ["./modules/user/*"]
+      "@types/*": ["./common/types/*"]
     }
   }
 }
