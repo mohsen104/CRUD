@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { UserController } from '@modules/user/user.controller.js';
 import type { Application } from 'express';
 import type { IRouteDefinition } from '@common/types/route.types.js';
+import container from '@common/configs/inversify.config.js';
 
 export function setupRoutes(app: Application) {
   const apiPrefix = '/api/v1';
@@ -9,7 +10,7 @@ export function setupRoutes(app: Application) {
   const controllers: any[] = [UserController];
 
   controllers.forEach((controllerClass) => {
-    const instance = new controllerClass();
+    const instance = container.resolve<any>(controllerClass);
     const basePath: string = Reflect.getMetadata('basePath', controllerClass);
     const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
 

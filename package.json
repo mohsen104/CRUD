@@ -14,6 +14,7 @@
     "@typegoose/typegoose": "^12.10.1",
     "auto-bind": "^5.0.1",
     "express": "^4.21.2",
+    "inversify": "^6.2.1",
     "mongoose": "^8.9.1",
     "pino": "^9.5.0",
     "pino-mongodb": "^4.3.0",

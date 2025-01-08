@@ -4,11 +4,13 @@ import { UserService } from './user.service.js';
 import type { NextFunction, Request, Response } from 'express';
 import type { IUser } from '@common/types/user.types.js';
 import type { IResponse } from '@common/types/global.types.js';
+import { inject } from 'inversify';
 
 @Controller('/users')
 export class UserController {
-  private service: UserService = new UserService();
-  constructor() {
+  private service: UserService;
+  constructor(@inject(UserService) service: UserService) {
+    this.service = service;
     autoBind(this);
   }
   @Get('/')
