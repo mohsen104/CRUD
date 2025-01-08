@@ -13,6 +13,16 @@ const consoleTransport = pino.transport({
   },
 });
 
+const mongodbTransport = pino.transport({
+  target: 'pino-mongodb',
+  level: 'info',
+  options: {
+    uri: process.env.MONGODB_URI,
+    database: process.env.MONGODB_DATABASE,
+    collection: process.env.COLLECTION_LOGS,
+  },
+});
+
 const logger = pino(
   {
     level: 'info',
@@ -26,7 +36,7 @@ const logger = pino(
     },
     timestamp: pino.stdTimeFunctions.isoTime,
   },
-  pino.multistream([{ stream: fileTransport }, { stream: consoleTransport }])
+  pino.multistream([{ stream: fileTransport }, { stream: consoleTransport }, { stream: mongodbTransport }])
 );
 
 export default logger;

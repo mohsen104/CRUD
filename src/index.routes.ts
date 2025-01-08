@@ -4,6 +4,8 @@ import type { Application } from 'express';
 import type { IRouteDefinition } from '@common/types/route.types.js';
 
 export function setupRoutes(app: Application) {
+  const apiPrefix = '/api/v1';
+
   const controllers: any[] = [UserController];
 
   controllers.forEach((controllerClass) => {
@@ -13,7 +15,7 @@ export function setupRoutes(app: Application) {
 
     routes.forEach((route: IRouteDefinition) => {
       const method: string = route.method.toLowerCase();
-      const path: string = `${basePath}${route.path}`;
+      const path: string = `${apiPrefix}${basePath}${route.path}`;
       const handler: string | symbol = instance[route.handler];
 
       app[method as keyof Application](path, handler);
