@@ -5,6 +5,8 @@ import type { NextFunction, Request, Response } from 'express';
 import type { IUser } from '@common/types/user.types.js';
 import type { IResponse } from '@common/types/global.types.js';
 import { inject } from 'inversify';
+import validator from '@common/validations/validator.js';
+import zUser from './user.schema.js';
 
 @Controller('/users')
 export class UserController {
@@ -36,6 +38,7 @@ export class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { username, age, job, email, password }: IUser = req.body;
+      validator(zUser, { username, age, job, email, password });
       const result: IResponse = await this.service.createUser({ username, age, job, email, password });
       res.status(result.status).json(result);
     } catch (error) {
@@ -47,6 +50,7 @@ export class UserController {
     try {
       const id = req.params.id as string;
       const { username, age, job, email, password }: IUser = req.body;
+      validator(zUser, { username, age, job, email, password });
       const result: IResponse = await this.service.updateUser(id, { username, age, job, email, password });
       res.status(result.status).json(result);
     } catch (error) {
