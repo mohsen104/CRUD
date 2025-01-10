@@ -1,4 +1,4 @@
-import type { Application, Response, Request } from 'express';
+import type { Application, Response, Request, NextFunction } from 'express';
 import { StatusCodes } from '@constants/statusCodes.js';
 import logger from '@common/configs/logger.config.js';
 
@@ -9,7 +9,7 @@ interface IResponseAllException {
 }
 
 function AllExceptionHandler(app: Application) {
-  app.use((err: any, req: Request, res: Response<IResponseAllException>) => {
+  app.use((err: any, req: Request, res: Response<IResponseAllException>, next: NextFunction) => {
     let status = err?.status ?? err?.statusCode ?? err?.code;
     if (!status || isNaN(status) || status > 511 || status < 200) status = StatusCodes.INTERNAL_SERVER_ERROR;
     const message = err?.message ?? err?.cause ?? 'Internal Server Error';
