@@ -1,6 +1,0 @@
-{"level":"INFO","time":"2025-01-08T19:32:41.868Z","msg":"Request received: GET /api/v1/users"}
-{"level":"INFO","time":"2025-01-08T20:00:00.295Z","msg":"Request received: GET /api/v1/users"}
-{"level":"INFO","time":"2025-01-08T20:06:59.407Z","msg":"Request received: GET /api/v1/users"}
-{"level":"INFO","time":"2025-01-08T20:07:02.202Z","msg":"Request received: GET /api/v1/users"}
-{"level":"INFO","time":"2025-01-08T20:07:03.043Z","msg":"Request received: GET /api/v1/users"}
-{"level":"INFO","time":"2025-01-08T20:07:04.601Z","msg":"Request received: GET /api/v1/users"}
