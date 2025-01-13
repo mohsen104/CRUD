@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { UserController } from '@modules/user/user.controller.js';
 import type { Application } from 'express';
 import type { IRouteDefinition } from '@common/types/route.types.js';

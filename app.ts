@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express, { type Application } from 'express';
 import NotFoundHandler from '@exceptions/not-found.handler.js';
 import AllExceptionHandler from '@exceptions/all-exception.handler.js';

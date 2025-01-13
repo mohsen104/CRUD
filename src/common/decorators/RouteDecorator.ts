@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import type { IRouteDefinition } from '@common/types/route.types.js';
 
 export function Controller(basePath: string): ClassDecorator {
