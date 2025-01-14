@@ -1,35 +1,72 @@
-import { Router } from 'express';
-
-const router = Router();
+import type { IRouteDefinition } from '@common/types/route.types.js';
 
 export function Controller(basePath: string): ClassDecorator {
   return (target: Function) => {
-    router.use(basePath, router);
+    Reflect.defineMetadata('basePath', basePath, target);
+    if (!Reflect.hasMetadata('routes', target)) {
+      Reflect.defineMetadata('routes', [], target);
+    }
   };
 }
 
 export function Get(path: string): MethodDecorator {
-  return (target: any, propertyKey: string | symbol, descriptor) => {
-    router.get(path, target[propertyKey]);
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
+    const controllerClass = target.constructor;
+    if (!Reflect.hasMetadata('routes', controllerClass)) {
+      Reflect.defineMetadata('routes', [], controllerClass);
+    }
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    routes.push({ method: 'GET', path, handler: propertyKey });
+    Reflect.defineMetadata('routes', routes, controllerClass);
   };
 }
 
 export function Post(path: string): MethodDecorator {
-  return (target: any, propertyKey: string | symbol, descriptor) => {
-    router.post(path, target[propertyKey]);
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
+    const controllerClass = target.constructor;
+    if (!Reflect.hasMetadata('routes', controllerClass)) {
+      Reflect.defineMetadata('routes', [], controllerClass);
+    }
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    routes.push({ method: 'POST', path, handler: propertyKey });
+    Reflect.defineMetadata('routes', routes, controllerClass);
   };
 }
 
 export function Put(path: string): MethodDecorator {
-  return (target: any, propertyKey: string | symbol, descriptor) => {
-    router.put(path, target[propertyKey]);
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
+    const controllerClass = target.constructor;
+    if (!Reflect.hasMetadata('routes', controllerClass)) {
+      Reflect.defineMetadata('routes', [], controllerClass);
+    }
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    routes.push({ method: 'PUT', path, handler: propertyKey });
+    Reflect.defineMetadata('routes', routes, controllerClass);
   };
 }
 
 export function Delete(path: string): MethodDecorator {
-  return (target: any, propertyKey: string | symbol, descriptor) => {
-    router.put(path, target[propertyKey]);
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
+    const controllerClass = target.constructor;
+    if (!Reflect.hasMetadata('routes', controllerClass)) {
+      Reflect.defineMetadata('routes', [], controllerClass);
+    }
+    const routes: IRouteDefinition[] = Reflect.getMetadata('routes', controllerClass);
+    routes.push({ method: 'DELETE', path, handler: propertyKey });
+    Reflect.defineMetadata('routes', routes, controllerClass);
   };
 }
 
-export default router;
+export function Middleware(middleware: Function): MethodDecorator {
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
+    const controllerClass = target.constructor;
+
+    if (!Reflect.hasMetadata('middlewares', controllerClass, propertyKey)) {
+      Reflect.defineMetadata('middlewares', [], controllerClass, propertyKey);
+    }
+
+    const middlewares = Reflect.getMetadata('middlewares', controllerClass, propertyKey);
+    middlewares.push(middleware);
+    Reflect.defineMetadata('middlewares', middlewares, controllerClass, propertyKey);
+  };
+}

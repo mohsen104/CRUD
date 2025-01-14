@@ -6,6 +6,8 @@ import type { IUser } from '@common/types/user.types.js';
 import type { IResponse } from '@common/types/global.types.js';
 import { inject } from 'inversify';
 import { StatusCodes } from '@common/constants/statusCodes.js';
+import validator from '@common/validations/validator.js';
+import zUser from './user.schema.js';
 
 @Controller('/users')
 export class UserController {
@@ -37,6 +39,7 @@ export class UserController {
   async createUser(req: Request, res: Response<IResponse>, next: NextFunction) {
     try {
       const { username, age, job, email, password }: IUser = req.body;
+      validator(zUser, { username, age, job, email, password });
       await this.service.createUser({ username, age, job, email, password });
       res.status(StatusCodes.CREATED).json({ message: 'user created successfully' });
     } catch (error) {

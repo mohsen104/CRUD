@@ -5,6 +5,8 @@ import AllExceptionHandler from '@exceptions/all-exception.handler.js';
 import ConnectedToMongodb from '@configs/mongodb.config.js';
 import setupRoutes from './src/index.routes.js';
 import logger from '@common/configs/logger.config.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './openapi.json' assert { type: 'json' };
 
 const app: Application = express();
 const port = process.env.PORT;
@@ -20,6 +22,8 @@ app.use((req, res, next) => {
 });
 
 ConnectedToMongodb(uri, database);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 setupRoutes(app);
 

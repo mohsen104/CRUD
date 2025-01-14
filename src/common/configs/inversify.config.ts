@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { UserService } from '@modules/user/user.service.js';
 import { Container } from 'inversify';
 import { UserController } from '@modules/user/user.controller.js';
