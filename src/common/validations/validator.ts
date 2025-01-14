@@ -7,9 +7,10 @@ const validator = (schema: ZodSchema, data: object) => {
   if (!validationResult.success) {
     throw {
       status: StatusCodes.BAD_REQUEST,
-      message: fromError(validationResult.error).toString(),
+      message: fromError(validationResult.error).message.toString(),
     };
   }
+  return data;
 };
 
 export default validator;

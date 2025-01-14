@@ -20,7 +20,7 @@ export class UserService {
     if (isUserExists) throw { status: StatusCodes.UNPROCESSABLE_ENTITY, message: 'user already exists' };
     await UserModel.create({ username, age, job, email, password });
   }
-  async updateUser(id: string, dto: IUser) {
+  async updateUser(id: string, dto: Partial<IUser>) {
     if (!isValidObjectId(id)) throw { status: StatusCodes.BAD_REQUEST, message: 'invalid id' };
     const user = await UserModel.findById(new Types.ObjectId(id));
     if (!user) throw { status: StatusCodes.NOT_FOUND, message: 'user not found' };
