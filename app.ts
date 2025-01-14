@@ -3,7 +3,7 @@ import express, { type Application } from 'express';
 import NotFoundHandler from '@exceptions/not-found.handler.js';
 import AllExceptionHandler from '@exceptions/all-exception.handler.js';
 import ConnectedToMongodb from '@configs/mongodb.config.js';
-import { setupRoutes } from './src/index.routes.js';
+import setupRoutes from './src/index.routes.js';
 import logger from '@common/configs/logger.config.js';
 
 const app: Application = express();
