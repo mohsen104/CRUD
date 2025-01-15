@@ -5,7 +5,9 @@
   "main": "app.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx --watch --env-file=.env app.ts"
+    "start":"node dist/app.js",
+    "build":"tsc",
+    "dev": "tsx --watch --env-file=.env app.ts",
   },
   "keywords": [],
   "author": "Mohsen",
