@@ -18,7 +18,9 @@ function setupRoutes(app: Application) {
       const path: string = `${apiPrefix}${basePath}${route.path}`;
       const handler: string | symbol = instance[route.handler];
 
-      app[method as keyof Application](path, handler);
+      const middlewares: Function[] = Reflect.getMetadata('middlewares', controllerClass, route.handler) || [];
+
+      app[method as keyof Application](path, ...middlewares, handler);
     });
   });
 }
